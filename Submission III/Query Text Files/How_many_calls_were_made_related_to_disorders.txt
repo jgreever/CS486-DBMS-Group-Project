@@ -1,0 +1,5 @@
+ mental_disorder_related_calls 
+-------------------------------
+                          2671
+(1 row)
+

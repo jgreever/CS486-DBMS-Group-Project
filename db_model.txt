@@ -1,0 +1,171 @@
+⌈-⌉ public #2200: schema
+    --  standard public schema
+    + tables
+        p_bias_crime #16512: table
+            + columns
+                [2] Bias Category: text
+                [3] Bias Type: text
+                [4] Business as victim: boolean
+                [5] Case Type: text
+                [6] Location Type: text
+                [7] Open Data Case Number: text
+                [8] Primary Offense Type: text
+                [9] Report Date: date
+                    --  We can ignore the day value.\nIt was not present in the original data.\nWe only need the month and year.
+                [10] Suspect Age: bigint
+                [11] Suspect Gender: text
+                [12] Suspect Race: text
+                [13] Victim Age: bigint
+               [14] Victim Gender: text
+                [15] Victim Race: text
+                [16] Victim Suspect Relationship: text
+            + indices
+                idx_bias_category #16559: index (Bias Category)
+        p_crime_data #16517: table
+            + columns
+                [2] Address: text
+                [3] Case Number: text
+                [4] Crime Against: text
+                [5] Neighborhood: text
+                [6] Occur Date: date
+                [7] Occur Time: time
+                [8] Offense Category: text
+                [9] Offense Type: text
+                [10] Open Data Lat: double precision
+                [11] Open Data Lon: double precision
+                [12] Report Date: date
+                [13] Offense Count: bigint
+            + indices
+                idx_crime_against #16560: index (Crime Against)
+        p_dispatched_calls #16522: table
+            + columns
+                [2] Call Number: bigint
+                [3] Report Month Year: text
+                [4] Report Date Time: time
+                [5] Time In Queue sec: double precision
+                [6] Travel Time sec: double precision
+                [7] Response Time sec: double precision
+                [8] Priority: text
+                [9] Final Call Group: text
+                [10] Final Call Category: text
+                [11] Neighborhood: text
+                [12] Address: text
+                [13] Open Data X: double precision
+                [14] Open Data Y: double precision
+                [15] Open Data Lon: double precision
+                [16] Open Data Lat: double precision
+            + indices
+                idx_final_call_group #16561: index (Final Call Group)
+        p_officer_involved_shootings #16527: table
+            + columns
+                [2] Officer Fatally Injured: boolean
+                [3] Any Officers Injured on Case: boolean
+                [4] Case Number: text
+                [5] Date Occurred: date
+                [6] Deadly Force Type: text
+                [7] Did Subject Fire Shots: text
+                [8] General Location: text
+                [9] Grand Jury Transcripts link: text
+                [10] Initial Call Type: text
+                [11] Internal Affairs Investigation Link: text
+                [12] Internal Affairs Investigation Link 2: text
+                [13] Officer Race: text
+                [14] Officer Sex: text
+                [15] Officer Tenure: bigint
+                [16] Online PDF Link: text
+                [17] RecordID: bigint
+                [18] Subject Age: bigint
+                [19] Subject Name: text
+                [20] Subject Race: text
+                [21] Subject Sex: text
+                [22] Subject Weapon Type: text
+                    --  (NIBRS)
+                [23] Was Subject Actually Armed: boolean
+                    --  all boolean values of <null> in this table mean that either that information was pending release, or it was unknown/unavailable.
+                [24] Was Subject Injured: boolean
+                [25] Was Subject Injury Fatal: boolean
+                [26] Was Subject Perceived as Armed: boolean
+                [27] Number of Officers Injured on Case: bigint
+            + indices
+                idx_initial_call_type #16562: index (Initial Call Type)
+        p_overtime #16532: table
+            + columns
+                [2] Assignment: text
+                [3] Backfill: boolean
+                [4] Category Description: text
+                [5] Rank: text
+                [6] Request Date: date
+                [7] ID: bigint
+                [8] Paid Hours: double precision
+                [9] Work Hours: double precision
+            + indices
+                idx_rank #16563: index (Rank)
+        p_shootings #16537: table
+            + columns
+                [2] Block Address: text
+                [3] Incident Number: text
+                [4] Neighborhood: text
+                [5] Occur 2hr Time: text
+                [6] Occurrence Date: date
+                [7] Person Injury: boolean
+                [8] Precinct: text
+                [9] Open Data Latitude: double precision
+                [10] Open Data Longitude: double precision
+                [11] CasingsRecovered: bigint
+                [12] X: text
+                [13] Y: text
+            + indices
+                idx_neighborhood #16564: index (Neighborhood)
+        p_use_of_force #16542: table
+            + columns
+                [2] Blunt Object: text
+                [3] Category of Force Event - Measured at Event Level: text
+                [4] Disposition/Custody: text
+                [5] Day of Week: text
+                [6] Firearm: text
+                [7] Firearm - Implied: text
+                [8] Firearm - Replica: text
+                [9] Force Applied - 1: text
+                [10] Force Applied - 2: text
+                [11] Force Applied - 3: text
+                [12] Force Applied - 4: text
+                [13] Force Applied - 5: text
+                [14] Force Applied - 6: text
+                [15] Force Applied - 7: text
+                [16] Force Applied - 8: text
+                [17] Hour (6Hr): text
+                [18] Initial Call Category: text
+                [19] Initial Call type: text
+                [20] Knife / Edged Weapon / Stabbing Instrument: text
+                [21] Mental Health Crisis - Prior to Force, Perceived Lack of Compli: text
+                [22] Needle / Spit / Bodily Fluids: text
+                [23] No weapon (unarmed): text
+                [24] Officer: double precision
+                [25] Officer Precinct: text
+                [26] Officer Tenure: double precision
+                [27] Other Weapon: text
+                [28] Record ID: bigint
+                [29] Subject: double precision
+                [30] Subject - Race: text
+                [31] Subject - Sex: text
+                [32] Subject - Transient: text
+                [33] Subject Age: double precision
+                [34] Subject Instance: double precision
+                [35] Subject Resistance - 1: text
+                [36] Subject Resistance - 2: text
+                [37] Subject Resistance - 3: text
+                [38] Subject Resistance - 4: text
+                [39] Subject Resistance - 5: text
+                [40] Subject Resistance - 6: text
+                [41] Subject Resistance - 7: text
+                [42] Subject Resistance - 8: text
+                [43] Type of Call: text
+                [44] Under the Influence of Alcohol - Prior to Force, Perceived Cond: text
+                [45] Under the Influence of Drugs - Prior to Force, Perceived Condit: text
+                [46] Weapon Present or reported but not used or threatened use: text
+                [47] Record Count: bigint
+                [48] Record Count.1: bigint
+                [49] Month-Year: text
+            + indices
+                idx_dow #16565: index (Day of Week)
+ 

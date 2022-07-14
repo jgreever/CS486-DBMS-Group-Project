@@ -1,0 +1,5 @@
+           Crime            | Count 
+----------------------------+-------
+ Human Trafficking Offenses |    25
+(1 row)
+

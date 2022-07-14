@@ -1,0 +1,7 @@
+ Number of crimes committed | Suspect Gender 
+----------------------------+----------------
+                        422 | 
+                        213 | Male
+                         75 | Female
+(3 rows)
+

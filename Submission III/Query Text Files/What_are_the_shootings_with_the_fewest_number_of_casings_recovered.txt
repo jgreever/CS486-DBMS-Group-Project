@@ -1,0 +1,9 @@
+ Occurrence Date | Precinct | CasingsRecovered 
+-----------------+----------+------------------
+ 2019-03-30      | North    |                0
+ 2019-09-01      | North    |                0
+ 2019-07-08      | East     |                0
+ 2020-01-01      | Central  |                0
+ 2020-03-07      | North    |                0
+(5 rows)
+

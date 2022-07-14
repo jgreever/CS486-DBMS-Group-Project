@@ -1,0 +1,5 @@
+ count | Neighborhood  
+-------+---------------
+     3 | Healy Heights
+(1 row)
+

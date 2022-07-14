@@ -1,0 +1,5 @@
+ Total subject fatalities in officer-involved-shootings | Fatalities that involved officer injuries 
+--------------------------------------------------------+-------------------------------------------
+                                                     49 |                                         6
+(1 row)
+

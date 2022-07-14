@@ -1,0 +1,5 @@
+ Number of criminal occurrences | Year, time of month 
+--------------------------------+---------------------
+                            240 | 2021-10-20
+(1 row)
+

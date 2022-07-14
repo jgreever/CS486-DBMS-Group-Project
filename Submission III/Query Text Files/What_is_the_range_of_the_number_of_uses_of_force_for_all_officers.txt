@@ -1,0 +1,5 @@
+ Officer | Greatest number of force usage | Officer | Smallest number of force usage 
+---------+--------------------------------+---------+--------------------------------
+  571001 |                             73 |  404479 |                              1
+(1 row)
+

@@ -1,0 +1,5 @@
+ Number of uses of force where subject's resistance is passive 
+---------------------------------------------------------------
+                                                           395
+(1 row)
+

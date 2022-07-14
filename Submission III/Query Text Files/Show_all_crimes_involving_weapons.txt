@@ -1,0 +1,10 @@
+ count 
+-------
+   161
+(1 row)
+
+   Offense Category    |      Offense Type      | count 
+-----------------------+------------------------+-------
+ Weapon Law Violations | Weapons Law Violations |   847
+(1 row)
+

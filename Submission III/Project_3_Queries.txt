@@ -1,0 +1,244 @@
+-- Project 3 SQL Queries
+-- CS-486
+--
+-- Justin Greever
+-- Alissa Friel
+-- Christopher Lu
+-- Samuel Khodakovskiy
+-- Vinh Duong
+--
+-- All query results are stored in files that are named the same as the question
+-- they are answering.
+--
+--  Example:
+--  > Question: our question
+--  > <SQL QUERY>
+--  > Results stored in: our_question.txt
+
+
+-- What is the greatest number of shootings in any month?
+-- Results: What_is_the_greatest_number_of_shootings_in_any_month.txt
+--
+SELECT COUNT("Occurrence Date") AS "Shootings",
+       TO_CHAR("Occurrence Date", 'YYYY-MM') AS "Month",
+       TO_CHAR("Occurrence Date", 'Mon') AS  "Month Name"
+FROM p_shootings
+GROUP BY TO_CHAR("Occurrence Date", 'YYYY-MM'),
+          TO_CHAR("Occurrence Date", 'Mon')
+ORDER BY "Shootings" DESC
+LIMIT 1;
+
+
+-- What is the least committed crime?
+-- Results: What_is_the_least_committed_crime.txt
+--
+SELECT "Offense Category"
+AS "Crime", COUNT("Offense Category")
+AS "Count"
+FROM p_crime_data
+GROUP BY "Crime"
+ORDER BY "Count"
+LIMIT 1;
+
+
+-- Show the average tenure of officers that have used force.
+-- Results: Show_the_average_tenure_of_officers_that_have_used_force.txt
+--
+SELECT AVG("Officer Tenure")
+AS "Average Tenure"
+FROM p_use_of_force;
+
+
+-- What are the shootings with the fewest number of casings recovered?
+-- Results: What_are_the_shootings_with_the_fewest_number_of_casings_recovered.txt
+--
+SELECT "Occurrence Date", "Precinct", "CasingsRecovered"
+FROM p_shootings
+ORDER BY "CasingsRecovered" ASC;
+
+
+-- Are there any use of force incidents where the suspect did not resist?
+-- Are_there_any_use_of_force_incidents_where_the_suspect_did_not_resist.txt
+--
+SELECT COUNT(*) AS "Number of uses of force where subject's resistance is passive"
+FROM p_use_of_force
+WHERE "Subject Resistance - 1" = 'Passive';
+
+
+-- What is the range of the number of uses of force for all officers?
+-- Results: What_is_the_range_of_the_number_of_uses_of_force_for_all_officers.txt
+--
+SELECT top."Officer", top.count AS "Greatest number of force usage",
+   bottom."Officer", bottom.count AS "Smallest number of force usage"
+FROM
+	(SELECT "Officer", COUNT(*)
+	FROM p_use_of_force
+	GROUP BY "Officer"
+	ORDER BY COUNT(*)::int DESC
+	LIMIT 1) AS top,
+
+	(SELECT "Officer", COUNT(*)
+	FROM p_use_of_force
+	GROUP BY "Officer"
+	ORDER BY COUNT(*)::int
+	LIMIT 1) AS bottom;
+
+
+-- What race was each officer and subject in each incident?
+-- Results: What_race_was_each_officer_and_subject_in_each_incident.txt
+--
+SELECT "Date Occurred", "Officer Race", "Subject Race"
+FROM p_officer_involved_shootings;
+
+
+-- What is the safest neighborhood, according to the number of incidents?
+-- Results: What_is_the_safest_neighborhood_according_to_the_number_of_incidents.txt
+--
+Select COUNT("Case Number"), "Neighborhood"
+FROM p_crime_data
+GROUP BY "Neighborhood"
+ORDER BY COUNT("Case Number") ASC
+LIMIT 1;
+
+
+-- What is the time of month with the most criminal activity?
+-- Results: What_is_the_time_of_month_with_the_most_criminal_activity.txt
+--
+SELECT COUNT(*) AS "Number of criminal occurrences", "Occur Date" AS "Year, time of month"
+FROM p_crime_data
+GROUP BY "Occur Date"
+ORDER BY "Number of criminal occurrences" DESC
+LIMIT 1;
+
+
+-- Time of day with the most criminal activity?
+-- Results: Time_of_day_with_the_most_criminal_activity.txt
+--
+Select COUNT("Case Number"), "Occur Time"
+FROM p_crime_data
+GROUP BY "Occur Time"
+ORDER BY COUNT("Case Number") DESC
+LIMIT 1;
+
+
+-- Show all crimes involving weapons.
+-- Results: Show_all_crimes_involving_weapons.txt
+--
+SELECT "Offense Category", "Offense Type", COUNT(*)
+FROM p_crime_data
+WHERE "Offense Category" = 'Weapon Law Violations'
+GROUP BY "Offense Category", "Offense Type"
+ORDER BY "Offense Category", "Offense Type";
+
+
+-- What district has the most fatalities?
+-- Results: What_district_has_the_most_fatalities.txt
+--
+SELECT p_officer_involved_shootings."General Location",
+       COUNT(p_officer_involved_shootings."Was Subject Injury Fatal") AS "Number of Fatalities"
+FROM p_officer_involved_shootings
+GROUP BY "Date Occurred", "Was Subject Injury Fatal",
+         "General Location"
+ORDER BY "Number of Fatalities" DESC
+LIMIT 1;
+
+
+-- List all officer on-the-job injuries.
+-- Results: List_all_officer_on-the-job_injuries.txt
+--
+ SELECT
+(SELECT SUM("Number of Officers Injured on Case")
+FROM p_officer_involved_shootings)
++
+(SELECT COUNT("Officer Fatally Injured")
+FROM p_officer_involved_shootings)
+AS SumCount;
+
+
+-- Show all crimes by race.
+-- Results: Show_all_crimes_by_race.txt
+--
+SELECT p_use_of_force."Subject - Race", COUNT(p_use_of_force."Subject - Race")
+FROM p_use_of_force
+GROUP BY p_use_of_force."Subject - Race"
+ORDER BY COUNT(p_use_of_force."Subject - Race") DESC;
+
+
+-- Highest committed crime by race
+-- Results: Highest_committed_crime_by_race.txt
+--
+SELECT DISTINCT on ("Suspect Race") "Suspect Race", "Most Common Crime Type"
+FROM
+	(SELECT "Primary Offense Type" AS "Most Common Crime Type", "Suspect Race", COUNT(*) AS count
+	 FROM p_bias_crime
+	 GROUP BY "Primary Offense Type", "Suspect Race"
+	 ORDER BY "Suspect Race", count DESC) AS top_crimes;
+
+
+-- Get the number of crimes committed by each gender.
+-- Results: Get_the_number_of_crimes_committed_by_each_gender.txt
+--
+SELECT COUNT (*) AS "Number of crimes committed", "Suspect Gender"
+FROM p_bias_crime
+GROUP BY "Suspect Gender";
+
+
+-- Show crimes committed by each age group.
+-- Results: Show_crimes_committed_by_each_age_group.txt
+--
+SELECT "Suspect Age", COUNT (*) AS "Number of crimes committed"
+FROM p_bias_crime
+GROUP BY "Suspect Age"
+ORDER BY "Suspect Age" DESC;
+
+
+-- Show all civilian deaths related to police activities.
+-- Results: Show_all_civilian_deaths_related_to_police_activities.txt
+--
+SELECT COUNT("RecordID")
+FROM p_officer_involved_shootings
+WHERE "Was Subject Injury Fatal";
+
+
+-- What are the top 10 precincts with the highest uses of force?
+-- Results: What_are_the_top_10_precincts_with_the_highest_uses_of_force.txt
+--
+SELECT "Officer Precinct", COUNT(*) AS "Number of Force Use"
+FROM p_use_of_force
+GROUP BY "Officer Precinct"
+ORDER BY "Number of Force Use" DESC
+LIMIT 10;
+
+
+-- Tenured officers who only used force once?
+-- Results: Tenured_officers_who_only_used_force_once.txt
+--
+SELECT "Officer", COUNT(*)
+FROM p_use_of_force
+WHERE "Force Applied - 1" IS NOT NULL
+AND "Officer" IS NOT NULL
+GROUP BY "Officer"
+HAVING COUNT(*) < 2
+ORDER BY COUNT(*) DESC;
+
+
+-- How many suspect fatalities involved officer injuries?
+-- Results: How_many_suspect_fatalities_involved_officer_injuries.txt
+--
+SELECT total_fatalities.count AS "Total subject fatalities in officer-involved-shootings", fatalities_with_injury.count AS "Fatalities that involved officer injuries"
+FROM
+    (SELECT COUNT(*) AS count FROM p_officer_involved_shootings
+     WHERE "Was Subject Injury Fatal" = true AND "Any Officers Injured on Case" = true) AS fatalities_with_injury,
+        (SELECT COUNT(*) AS count
+         FROM p_officer_involved_shootings
+         WHERE "Was Subject Injury Fatal" = true) AS total_fatalities;
+
+
+-- How many calls were made related to disorders?
+-- Results: How_many_calls_were_made_related_to_disorders.txt
+--
+SELECT COUNT("Final Call Category") AS mental_disorder_related_calls
+FROM p_dispatched_calls
+WHERE "Final Call Category" = 'Disorder';
+
+--! END FILE !--

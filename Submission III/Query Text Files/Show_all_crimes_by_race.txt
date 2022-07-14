@@ -1,0 +1,11 @@
+ Subject - Race  | count 
+-----------------+-------
+ White           |  4397
+ Black           |  2167
+ Hispanic        |   660
+ Asian           |   207
+ Native American |   105
+ Unknown         |    45
+                 |     0
+(7 rows)
+

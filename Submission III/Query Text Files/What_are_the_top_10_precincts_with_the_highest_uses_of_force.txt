@@ -1,0 +1,14 @@
+  Officer Precinct  | Number of Force Use 
+--------------------+---------------------
+ Central Precinct   |                2797
+ East Precinct      |                2535
+ North Precinct     |                1567
+ Transit (PPB Only) |                 135
+ TOD                |                 124
+ Traffic            |                 109
+ Detectives         |                  65
+                    |                  55
+ SERT               |                  52
+ K9                 |                  50
+(10 rows)
+

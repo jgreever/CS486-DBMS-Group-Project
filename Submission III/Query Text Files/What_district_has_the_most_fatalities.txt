@@ -1,0 +1,5 @@
+           General Location           | Number of Fatalities 
+--------------------------------------+----------------------
+ Cityteam Ministries Portland Shelter |                    5
+(1 row)
+

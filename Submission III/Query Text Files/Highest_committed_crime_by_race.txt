@@ -1,0 +1,11 @@
+  Suspect Race   | Most Common Crime Type 
+-----------------+------------------------
+ Asian           | Aggravated Assault
+ Black           | Simple Assault
+ Latinx          | Simple Assault
+ Native American | Simple Assault
+ U               | All Other Larceny
+ White           | Simple Assault
+                 | 
+(7 rows)
+
